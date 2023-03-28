@@ -67,7 +67,7 @@ def predict():
 
     
     filename = request.form.get('fId')
-    df = pd.read_csv(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+    df = pd.read_csv(os.path.join(app.config['UPLOAD_FOLDER'], filename), encoding="utf-8")
     res = evaluate(df)
 
     return render_template('table.html', 
@@ -84,7 +84,7 @@ def predict():
 
 @app.route('/uploads/<filename>')
 def process_file(filename):
-    df = pd.read_csv(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+    df = pd.read_csv(os.path.join(app.config['UPLOAD_FOLDER'], filename), encoding="utf-8")
 
     if df.shape[0]>200 or df.shape[1] > 6:
         return render_template('error.html', 
@@ -107,4 +107,4 @@ def process_file(filename):
 
 
 if __name__ == '__main__':
-   app.run(host='0.0.0.0')
+   app.run(host='127.0.0.1')
